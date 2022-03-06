@@ -10,8 +10,8 @@ from torchmeta.datasets import Omniglot, MiniImagenet
 from torchmeta.transforms import ClassSplitter, Categorical, Rotation
 from torchvision.transforms import ToTensor, Resize, Compose
 
-from maml.model import ModelConvOmniglot, ModelConvMiniImagenet
-from maml.utils import ToTensor1D
+from model import ModelConvOmniglot, ModelConvMiniImagenet
+from utils import ToTensor1D
 
 Benchmark = namedtuple('Benchmark', 'meta_train_dataset meta_val_dataset meta_test_dataset model loss_function')
 
