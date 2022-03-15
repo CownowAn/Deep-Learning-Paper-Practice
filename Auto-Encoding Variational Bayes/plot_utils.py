@@ -29,3 +29,14 @@ def plot_latent_space(vae, n=30, figsize=15, device='cuda'):
     plt.ylabel("z[1]")
     plt.imshow(figure, cmap="Greys_r")
     plt.show()
+
+def plot_label_clusters(vae, data, labels):
+    # display a 2D plot of the digit classes in the latent space
+    mu, log_var = vae.encoder(data)
+    z  = vae.sampling(mu, log_var)
+    plt.figure(figsize=(12, 10))
+    plt.scatter(z[:, 0].to('cpu').data.numpy(), z[:, 1].to('cpu').data.numpy(), c=labels.to('cpu').data.numpy())
+    plt.colorbar()
+    plt.xlabel("z[0]")
+    plt.ylabel("z[1]")
+    plt.show()
