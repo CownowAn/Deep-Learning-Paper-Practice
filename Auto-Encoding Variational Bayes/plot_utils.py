@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as  np
 import torch
 
-def plot_latent_space(vae, n=30, figsize=15, device='cuda'):
+def plot_latent_space(vae, n=30, figsize=15, device='cuda', save_root="./fig/", save_plot=False, epoch=1):
     # display [n, n] 2D manifold of digits
     digit_size = 28
     scale = 1.0
@@ -28,15 +28,19 @@ def plot_latent_space(vae, n=30, figsize=15, device='cuda'):
     plt.xlabel("z[0]")
     plt.ylabel("z[1]")
     plt.imshow(figure, cmap="Greys_r")
+    if save_plot:
+        plt.savefig(save_root+"latent_space_epoch"+str(epoch)+".png")
     plt.show()
 
-def plot_label_clusters(vae, data, labels):
+def plot_label_clusters(vae, data, labels, device, save_root="./fig/", save_plot=False, epoch=1):
     # display a 2D plot of the digit classes in the latent space
-    mu, log_var = vae.encoder(data)
+    mu, log_var = vae.encoder(data.to(device))
     z  = vae.sampling(mu, log_var)
     plt.figure(figsize=(12, 10))
     plt.scatter(z[:, 0].to('cpu').data.numpy(), z[:, 1].to('cpu').data.numpy(), c=labels.to('cpu').data.numpy())
     plt.colorbar()
     plt.xlabel("z[0]")
     plt.ylabel("z[1]")
+    if save_plot:
+        plt.savefig(save_root+"label_clusters_epoch"+str(epoch)+".png")
     plt.show()
